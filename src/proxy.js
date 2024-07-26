@@ -16,7 +16,6 @@ async function proxy(req, res) {
    * Avoid loopback that could causing server hang.
    */
    
-    return redirect(req, res);
   try {
     let origin = await undici.request(req.params.url, {
       headers: {
