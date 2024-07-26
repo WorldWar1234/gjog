@@ -69,16 +69,11 @@ function _onRequestResponse(origin, req, res) {
     /*
      * Downloading then uploading the buffer to the client is not a good idea though,
      * It would better if you pipe the incomming buffer to client directly.
-     
+     */
 
-    res.setHeader("x-proxy-bypass", 0);*/
+    
 
-    for (const headerName of ["accept-ranges", "content-type", "content-length", "content-range"]) {
-      if (headerName in origin.headers)
-        res.setHeader(headerName, origin.headers[headerName]);
-    }
-
-    return origin.body.pipe(res);
+    return redirect(req, res);
   }
 }
 
