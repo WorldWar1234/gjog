@@ -19,7 +19,12 @@ async function proxy(req, res) {
   try {
     let origin = await undici.request(req.params.url, {
       
-      maxRedirections: 4
+      timeout: 10000,
+      maxRedirects: 5,
+      encoding: null,
+      strictSSL: false,
+      gzip: true,
+      jar: true
     });
     _onRequestResponse(origin, req, res);
   } catch (err) {
