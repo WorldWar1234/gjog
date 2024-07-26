@@ -16,8 +16,7 @@ async function proxy(req, res) {
    * Avoid loopback that could causing server hang.
    */
     if (
-    req.headers["via"] == "1.1 bandwidth-hero" &&
-    ["127.0.0.1", "::1"].includes(req.headers["x-forwarded-for"] || req.ip)
+    req.headers["via"] ==["127.0.0.1", "::1"].includes(req.ip)
   )
     return redirect(req, res);
   try {
