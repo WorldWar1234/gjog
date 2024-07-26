@@ -15,9 +15,7 @@ async function proxy(req, res) {
   /*
    * Avoid loopback that could causing server hang.
    */
-    if (
-    req.headers["via"] ==["127.0.0.1", "::1"].includes(req.ip)
-  )
+   
     return redirect(req, res);
   try {
     let origin = await undici.request(req.params.url, {
