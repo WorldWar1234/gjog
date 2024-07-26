@@ -70,7 +70,7 @@ function _onRequestResponse(origin, req, res) {
      * It would better if you pipe the incomming buffer to client directly.
      */
 
-    res.setHeader("x-proxy-bypass", 1);
+    res.setHeader("x-proxy-bypass", 0);
 
     for (const headerName of ["accept-ranges", "content-type", "content-length", "content-range"]) {
       if (headerName in origin.headers)
