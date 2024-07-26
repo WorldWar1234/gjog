@@ -18,11 +18,7 @@ async function proxy(req, res) {
    
   try {
     let origin = await undici.request(req.params.url, {
-      headers: {
-        ...pick(req.headers, ["cookie", "dnt", "referer", "range"]),
-        "user-agent": "Mozilla/5.0 (X11; Linux x86_64; rv:10.0) Gecko/20100101 Firefox/10.0",
-        "x-forwarded-for": req.ip,
-      },
+      
       maxRedirections: 4
     });
     _onRequestResponse(origin, req, res);
