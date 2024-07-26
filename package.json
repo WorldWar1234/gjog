@@ -7,7 +7,7 @@
   "author": "Anatoliy Yastreb",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node --transpile-only server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
