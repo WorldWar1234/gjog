@@ -26,8 +26,10 @@ function compress(req, res, imageUrl) {
         };
         copyHeaders(req, res, manipulator);
         res.setHeader('content-length', info.size);
-        res.setHeader('x-original-size', req.params.originSize);
-        res.setHeader('x-bytes-saved', req.params.originSize - info.size);
+        if (req.params.originSize) {
+          res.setHeader('x-original-size', req.params.originSize);
+          res.setHeader('x-bytes-saved', req.params.originSize - info.size);
+        }
         console.log('Headers:', res.getHeaders());
         console.log('Sending response...');
         res.status(200).send(output);
