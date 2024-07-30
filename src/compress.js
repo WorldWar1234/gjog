@@ -26,7 +26,6 @@ function compress(req, res, imageUrl) {
         };
         copyHeaders(req, res, manipulator);
         res.setHeader('content-length', info.size);
-        res.setHeader('content-encoding', 'identity');
         res.setHeader('x-original-size', req.params.originSize);
         res.setHeader('x-bytes-saved', req.params.originSize - info.size);
         console.log('Headers:', res.getHeaders());
