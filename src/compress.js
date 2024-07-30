@@ -1,6 +1,12 @@
 const sharp = require('sharp');
+const shouldCompress = require('./shouldCompress');
 
 function compress(req, res, imageUrl) {
+  if (!shouldCompress(req)) {
+    // Return the original image without compression
+    return res.status(200).sendFile(imageUrl);
+  }
+
   sharp(imageUrl)
     .grayscale(req.params.grayscale)
     .toFormat(req.params.webp ? 'webp' : 'jpeg', {
