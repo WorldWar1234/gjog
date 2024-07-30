@@ -18,11 +18,14 @@ function compress(req, res, imageUrl) {
             return res.status(500).end();
           }
           console.log('Output buffer:', output.length);
-          res.setHeader('content-type', `image/${req.params.webp ? 'webp' : 'jpeg'}`);
+          const format = req.params.webp ? 'webp' : 'jpeg';
+          res.setHeader('content-type', `image/${format}`);
           res.setHeader('content-length', info.size);
           res.setHeader('content-encoding', 'identity');
+          res.setHeader('x-original-size', req.params.originSize);
+          res.setHeader('x-bytes-saved', req.params.originSize - info.size);
           console.log('Sending response...');
-          res.send(output);
+          res.status(200).send(output);
         });
     } else {
       return res.redirect(imageUrl);
