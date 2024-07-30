@@ -8,7 +8,7 @@ const app = express();
 app.enable('trust proxy');
 app.get('/', authenticate, params, (req, res) => {
   const imageUrl = req.params.url;
-  compress(req, res, imageUrl);
+  compress(req, res, imageUrl); // Pass the req object to the compress function
 });
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.listen(process.env.PORT || 8080, () => console.log('Listening...'));
