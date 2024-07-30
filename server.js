@@ -1,15 +1,14 @@
-#!/usr/bin/env node
-'use strict'
-
-const app = require('express')();
+const express = require('express');
 const authenticate = require('./src/authenticate');
 const params = require('./src/params');
-const proxy = require('./src/proxy');
+const compress = require('./src/compress');
 
-const PORT = process.env.PORT || 8080;
+const app = express();
 
-app.disable("x-powered-by");
-app.set("trust proxy", true)
-app.get('/', authenticate, params, proxy);
+app.enable('trust proxy');
+app.get('/', authenticate, params, (req, res) => {
+  const imageUrl = req.params.url;
+  compress(req, res, imageUrl);
+});
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+app.listen(process.env.PORT || 8080, () => console.log('Listening...'));
