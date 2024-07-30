@@ -3,8 +3,8 @@ const shouldCompress = require('./shouldCompress');
 
 function compress(req, res, imageUrl) {
   if (!shouldCompress(req)) {
-    // Return the original image without compression
-    return res.status(200).sendFile(imageUrl);
+    // Redirect to the original image URL without compression
+    return res.redirect(imageUrl);
   }
 
   sharp(imageUrl)
