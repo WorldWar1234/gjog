@@ -17,9 +17,12 @@ function compress(req, res, imageUrl) {
             console.error(err);
             return res.status(500).end();
           }
+          console.log('Output buffer:', output.length);
           res.setHeader('content-type', `image/${req.params.webp ? 'webp' : 'jpeg'}`);
           res.setHeader('content-length', info.size);
-          res.status(200).send(output);
+          res.setHeader('content-encoding', 'identity');
+          console.log('Sending response...');
+          res.send(output);
         });
     } else {
       return res.redirect(imageUrl);
