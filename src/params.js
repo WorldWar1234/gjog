@@ -1,16 +1,21 @@
-"use strict";
-const DEFAULT_QUALITY = 40
+const DEFAULT_QUALITY = 40;
 
 function params(req, res, next) {
-  let url = req.query.url;
-  if (!url) return res.send('bandwidth-hero-proxy');
+  const { url, jpeg, bw, l } = req.query;
 
-  req.params.url = decodeURIComponent(url);
-  req.params.webp = !req.query.jpeg
-  req.params.grayscale = req.query.bw != 0
-  req.params.quality = parseInt(req.query.l, 10) || DEFAULT_QUALITY
+  if (!url) {
+    return res.end('bandwidth-hero-proxy');
+  }
 
-  next()
+  const urls = Array.isArray(url) ? url.join('&url=') : url;
+  const cleanedUrl = urls.replace(/http:\/\/1\.1\.\d\.\d\/bmi\/(https?:\/\/)?/i, 'http://');
+
+  req.params.url = cleanedUrl;
+  req.params.webp = !jpeg;
+  req.params.grayscale = bw !== '0';
+  req.params.quality = parseInt(l, 10) || DEFAULT_QUALITY;
+
+  next();
 }
 
-module.exports = params
+module.exports = params;
