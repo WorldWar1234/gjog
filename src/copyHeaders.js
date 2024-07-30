@@ -1,10 +1,13 @@
-function copyHeaders(source, target) {
+function copyHeaders(source, target, manipulator) {
   if (source.headers) {
     for (const [key, value] of Object.entries(source.headers)) {
-      try {
+      if (manipulator) {
+        const manipulatedValue = manipulator(key, value);
+        if (manipulatedValue !== undefined) {
+          target.setHeader(key, manipulatedValue);
+        }
+      } else {
         target.setHeader(key, value);
-      } catch (e) {
-        console.log(e.message);
       }
     }
   } else {
